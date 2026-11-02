@@ -56,8 +56,11 @@
   .row{display:flex;align-items:center;justify-content:space-between;padding:27px 0;border-bottom:1px solid var(--line)}
   .row:last-child{border-bottom:0}
   .dev{display:flex;align-items:center;gap:12px;font-size:19px;font-weight:600;color:#c9d3d8}
-  .dev svg{width:22px;height:22px;stroke:var(--cyan);fill:none;stroke-width:1.8}
-  .dev em{font-style:normal;font-family:Unbounded,sans-serif;font-weight:700;color:var(--text);font-size:22px;min-width:34px}
+  .dev{gap:14px}
+  .dev em{font-style:normal;font-family:Unbounded,sans-serif;font-weight:700;color:var(--cyan2);font-size:20px;
+    width:56px;height:46px;display:grid;place-items:center;border-radius:14px;
+    background:rgba(34,195,230,.09);border:1px solid rgba(34,195,230,.28)}
+  .card.top .dev em{background:var(--cyan);color:#041014;border-color:var(--cyan)}
   .price{text-align:right}
   .price .p{font-family:Unbounded,sans-serif;font-weight:700;font-size:34px;letter-spacing:-.5px;line-height:1}
   .price .p small{font-size:20px;color:var(--muted);margin-left:4px;font-weight:600}
@@ -68,7 +71,10 @@
     font-size:21px;font-weight:600;color:#c9d3d8}
   footer div{display:flex;align-items:center;gap:12px}
   footer svg{width:24px;height:24px;stroke:var(--cyan);fill:none;stroke-width:1.8}
-  footer .r{margin-left:auto;color:var(--muted);font-weight:500}
+  footer .r{margin-left:auto;font-family:Unbounded,sans-serif;font-weight:700;font-size:26px;color:var(--text);letter-spacing:-.5px}
+  footer .r{gap:0} footer .r span{color:var(--cyan)}
+  footer .wl{color:#041014;background:var(--cyan);padding:10px 20px 10px 16px;border-radius:999px;font-weight:700}
+  footer .wl svg{stroke:#041014;stroke-width:2.2}
 </style>
 </head>
 <body>
@@ -79,17 +85,18 @@
     <div class="logo">will<i></i></div>
     <div class="head-r">
       <h1>Тарифы<span>.</span></h1>
-      <div class="sub">чем дольше период — тем <b>дешевле месяц</b></div>
+      <div class="sub">обходим <b>белые списки</b> · чем дольше период — тем <b>дешевле месяц</b></div>
     </div>
   </header>
   <div class="cards" id="cards"></div>
 </div>
 
 <footer>
+  <div class="wl"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12h7M12 8.5v7" transform="rotate(45 12 12)"/></svg>обход белых списков</div>
   <div><svg viewBox="0 0 24 24"><path d="M4 12c0-3 2.5-5 5-5 4 0 4 10 8 10 2.5 0 5-2 5-5s-2.5-5-5-5c-4 0-4 10-8 10-2.5 0-5-2-5-5z" transform="translate(-1 0) scale(.95)"/></svg>безлимитный трафик</div>
   <div><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg>19 серверов</div>
   <div><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>все тарифы — полный доступ</div>
-  <div class="r">will // бот</div>
+  <div class="r">Kuro<span>.xyz</span></div>
 </footer>
 
 <script>
@@ -101,7 +108,6 @@ const P = {
   30: {1:429, 3:1159, 6:2189, 12:3999},
 };
 const PERIODS = [[1,'месяц'],[3,'месяца'],[6,'месяцев'],[12,'месяцев']];
-const ico = '<svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg>';
 const fmt = n => n.toLocaleString('ru-RU').replace(/ /g,' ');
 
 document.getElementById('cards').innerHTML = PERIODS.map(([m,u]) => {
@@ -109,7 +115,7 @@ document.getElementById('cards').innerHTML = PERIODS.map(([m,u]) => {
   const top = m === 12;
   const rows = Object.keys(P).map(d => `
     <div class="row">
-      <div class="dev">${ico}<em>${d}</em>устройств</div>
+      <div class="dev"><em>${d}</em>устройств</div>
       <div class="price">
         <div class="p">${fmt(P[d][m])}<small>₽</small></div>
         ${m > 1 ? `<div class="m">≈ ${Math.round(P[d][m]/m)} ₽/мес</div>` : `<div class="m">в месяц</div>`}
